@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="action_settings">Ajustes</string>
+    <string name="app_name">HolaMundo</string>
+    <string name="hello_world">¡Hola mundo!</string>
+    <string name="text">Texto</string>
+
+</resources>

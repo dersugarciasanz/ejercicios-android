@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dersugarcia.helloworld"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="19" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" android:maxSdkVersion="19"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" android:maxSdkVersion="19"/>
+    <uses-permission android:name="android.permission.VIBRATE" android:maxSdkVersion="19"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:maxSdkVersion="19"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="19"/>
+    <uses-permission android:name="android.permission.INTERNET" android:maxSdkVersion="19"/>
+    <uses-permission android:name="android.permission.SET_WALLPAPER" android:maxSdkVersion="19"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="19"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" android:maxSdkVersion="19"/>
+    <uses-permission android:name="android.permission.NFC" android:maxSdkVersion="19"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" android:maxSdkVersion="19"/>
+    <permission android:name=".PERMISSION"></permission>
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:required="false" android:name="android.hardware.camera.autofocus"/>
+    <uses-feature android:name="android.hardware.camera.flash"/>
+    <uses-feature android:name="android.hardware.location.gps"/>
+    <uses-feature android:name="android.hardware.sensor.accelerometer"/>
+    <uses-configuration android:reqNavigation="trackball" android:reqHardKeyboard="false" android:reqFiveWayNav="false" android:reqKeyboardType="qwerty"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.dersugarcia.helloworld.MainActivity"
+            android:label="@string/app_name" android:permission=".PERMISSION" android:launchMode="standard">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service android:name=".AService" android:permission=".PERMISSION"></service>
+        <provider android:permission=".PERMISSION" android:name=".AProvider" android:authorities=".AProvider"></provider>
+        <receiver android:name="AReceiver" android:permission=".PERMISSION">
+            <intent-filter>
+                
+                <action android:name="android.intent.action.AIRPLANE_MODE"/>
+                <action android:name="android.intent.action.BATTERY_LOW"/>
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED"/><action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
