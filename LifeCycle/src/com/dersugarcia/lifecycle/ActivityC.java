@@ -16,6 +16,12 @@ public class ActivityC extends Activity {
 	}
 	
 	@Override
+	protected void onStart() {
+		super.onRestart();
+		Log.d("LIFECYCLE", "ActivityC.onStart()");
+	}
+	
+	@Override
 	protected void onPause() {
 		super.onPause();
 		Log.d("LIFECYCLE", "ActivityC.onPause()");
