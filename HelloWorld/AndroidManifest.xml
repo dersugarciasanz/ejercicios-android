@@ -5,19 +5,19 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="19" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" android:maxSdkVersion="19"/>
-    <uses-permission android:name="android.permission.WRITE_CONTACTS" android:maxSdkVersion="19"/>
-    <uses-permission android:name="android.permission.VIBRATE" android:maxSdkVersion="19"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:maxSdkVersion="19"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="19"/>
-    <uses-permission android:name="android.permission.INTERNET" android:maxSdkVersion="19"/>
-    <uses-permission android:name="android.permission.SET_WALLPAPER" android:maxSdkVersion="19"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="19"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS" android:maxSdkVersion="19"/>
-    <uses-permission android:name="android.permission.NFC" android:maxSdkVersion="19"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO" android:maxSdkVersion="19"/>
+        android:minSdkVersion="17"
+        android:targetSdkVersion="17" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" android:maxSdkVersion="17"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" android:maxSdkVersion="17"/>
+    <uses-permission android:name="android.permission.VIBRATE" android:maxSdkVersion="17"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:maxSdkVersion="17"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="17"/>
+    <uses-permission android:name="android.permission.INTERNET" android:maxSdkVersion="17"/>
+    <uses-permission android:name="android.permission.SET_WALLPAPER" android:maxSdkVersion="17"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="17"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" android:maxSdkVersion="17"/>
+    <uses-permission android:name="android.permission.NFC" android:maxSdkVersion="17"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" android:maxSdkVersion="17"/>
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature android:required="false" android:name="android.hardware.camera.autofocus"/>
     <uses-feature android:name="android.hardware.camera.flash"/>
