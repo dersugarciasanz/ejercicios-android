@@ -8,12 +8,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	TextView output;
+	private TextView output;
+	private Calculator calculator;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		output = (TextView)findViewById(R.id.textView);
+		calculator = Calculator.getInstance();
+		Log.d("CALCULATOR", calculator.toString());
 	}
 	
 	public void buttonClick(View v) {
