@@ -10,35 +10,77 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 	private TextView output;
 	private Calculator calculator;
+
+//	private final String DISPLAY = "DISPLAY";
+//	private final String OP = "OP";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		output = (TextView)findViewById(R.id.textView);
+
+		output = (TextView) findViewById(R.id.textView);
 		calculator = Calculator.getInstance();
-		Log.d("CALCULATOR", calculator.toString());
-	}
-	
-	public void buttonClick(View v) {
-		Button b = (Button)v;
-		String text = (String) b.getText();
-		Log.d("CALCULATOR", text);
-		
-		if(Character.isDigit(text.charAt(0))) {
-			numberClick(text);
-		} else {
-			operationClick(text);
-		}
-		
 	}
 
-	private void numberClick(String num) {
-		Log.d("CALCULATOR", "numberClick");
-		output.append(num);
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+//		Save variables before destroying the activity
+//		outState.putString(DISPLAY, calculator.getDisplay());
+//		outState.putChar(OP, calculator.getOperation());
+
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+//		Restore saved variables
+//		calculator.setOperation(savedInstanceState.getChar(OP));
 	}
 	
-	private void operationClick(String op) {
+	@Override
+	protected void onResume() {
+		super.onResume();
 		
+		this.updateDisplay();
 	}
-	
+
+	public void numberClick(View v) {
+		Log.d("CALCULATOR", "numberClick");
+		Button b = (Button) v;
+		String text = (String) b.getText();
+
+		calculator.inputNumber(text.charAt(0));
+		this.updateDisplay();
+	}
+
+	public void operationClick(View v) {
+		Log.d("CALCULATOR", "operationClick");
+
+		Button b = (Button) v;
+		String text = (String) b.getText();
+
+		calculator.inputOperation(text.charAt(0));
+		this.updateDisplay();
+	}
+
+	public void equalsClick(View v) {
+		Log.d("CALCULATOR", "equalsClick");
+
+		calculator.inputEquals();
+		this.updateDisplay();
+	}
+
+	public void deleteClick(View v) {
+		Log.d("CALCULATOR", "equalsClick");
+
+		calculator.inputDelete();
+		this.updateDisplay();
+	}
+
+	private void updateDisplay() {
+		output.setText(calculator.getDisplay());
+	}
+
 }
