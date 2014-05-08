@@ -17,7 +17,7 @@
 	<string name="button_mul">*</string>
 	<string name="button_add">+</string>
 	<string name="button_sub">-</string>
-	<string name="button_result">=</string>
+	<string name="button_equals">=</string>
 	<string name="button_period">.</string>
 	<string name="button_delete">DEL</string>
 </resources>
