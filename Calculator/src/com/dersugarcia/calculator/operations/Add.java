@@ -9,4 +9,7 @@ public class Add implements IOperation {
 		return num1 + num2;
 	}
 
+	public char getSymbol() {
+		return '+';
+	}
 }
