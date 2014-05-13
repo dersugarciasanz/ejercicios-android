@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Intents</string>
+    <string name="title_activity_form">Form</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_back">Back</string>
+    <string name="btn_form">Form</string>
+    <string name="btn_camera">Camera</string>
+    <string name="btn_contact">Contact</string>
+    
+
+</resources>
