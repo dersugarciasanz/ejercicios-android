@@ -39,17 +39,15 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		
-		if(savedInstanceState == null) {
-			editText = (EditText) findViewById(R.id.edittext_main);
-			textView = (TextView) findViewById(R.id.textview_main);
-			imageView = (ImageView) findViewById(R.id.imageView);
-			findViewById(R.id.button_form).setOnClickListener(new FormClickListener());
-			findViewById(R.id.button_camera).setOnClickListener(new CameraClickListener());
-			findViewById(R.id.button_contact).setOnClickListener(new ContactClickListener());
-		}
-		
+
+
+		editText = (EditText) findViewById(R.id.edittext_main);
+		textView = (TextView) findViewById(R.id.textview_main);
+		imageView = (ImageView) findViewById(R.id.imageView);
+		findViewById(R.id.button_form).setOnClickListener(new FormClickListener());
+		findViewById(R.id.button_camera).setOnClickListener(new CameraClickListener());
+		findViewById(R.id.button_contact).setOnClickListener(new ContactClickListener());
+
 	}
 	
 	@Override
@@ -62,9 +60,7 @@ public class MainActivity extends Activity {
 			}
 			break;
 		case REQUEST_CAMERA:
-			if (resultCode == RESULT_OK) {
-				setPic();
-			}
+			setPic();
 			break;
 		case REQUEST_CONTACT:
 			 if (resultCode == RESULT_OK) {
