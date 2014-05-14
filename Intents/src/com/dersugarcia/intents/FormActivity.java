@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class FormActivity extends Activity {
 
 	public static final String EDIT_TEXT = "EDIT_TEXT";
+	public static final String TEXT_VIEW = "TEXT_VIEW";
 	private EditText editText;
 	private TextView textView;
 	
@@ -25,7 +26,24 @@ public class FormActivity extends Activity {
 		
 		findViewById(R.id.button_ok).setOnClickListener(new OKClickListener());
 		findViewById(R.id.button_back).setOnClickListener(new BackClickListener());
-		textView.setText(getIntent().getCharSequenceExtra(MainActivity.EDIT_TEXT));
+		
+		if(savedInstanceState == null) {
+			textView.setText(getIntent().getCharSequenceExtra(MainActivity.EDIT_TEXT));
+		}
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+//		Save variables before destroying the activity
+		outState.putCharSequence(TEXT_VIEW, textView.getText());
+		super.onSaveInstanceState(outState);
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+//		Restore saved variables
+		textView.setText(savedInstanceState.getCharSequence(TEXT_VIEW));
 	}
 	
 	private class OKClickListener implements OnClickListener  {

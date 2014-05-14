@@ -31,9 +31,10 @@ public class MainActivity extends Activity {
 	private File image;
 	
 	public static final String EDIT_TEXT = "EDIT_TEXT";
-	public static final int REQUEST_FORM = 1;
-	public static final int REQUEST_CAMERA = 2;
-	public static final int REQUEST_CONTACT = 3;
+	public static final String TEXT_VIEW = "TEXT_VIEW";
+	private static final int REQUEST_FORM = 1;
+	private static final int REQUEST_CAMERA = 2;
+	private static final int REQUEST_CONTACT = 3;
 	@Override
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,20 @@ public class MainActivity extends Activity {
 	}
 	
 	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+//		Save variables before destroying the activity
+		outState.putCharSequence(TEXT_VIEW, textView.getText());
+		super.onSaveInstanceState(outState);
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+//		Restore saved variables
+		textView.setText(savedInstanceState.getCharSequence(TEXT_VIEW));
+	}
+	
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
@@ -65,25 +80,8 @@ public class MainActivity extends Activity {
 		case REQUEST_CONTACT:
 			 if (resultCode == RESULT_OK) {
 		            // Get the URI that points to the selected contact
-		            Uri contactUri = data.getData();
-		            // We only need the NUMBER column, because there will be only one row in the result
-		            String[] projection = {Phone.NUMBER};
-
-		            // Perform the query on the contact to get the NUMBER column
-		            // We don't need a selection or sort order (there's only one result for the given URI)
-		            // CAUTION: The query() method should be called from a separate thread to avoid blocking
-		            // your app's UI thread. (For simplicity of the sample, this code doesn't do that.)
-		            // Consider using CursorLoader to perform the query.
-		            Cursor cursor = getContentResolver()
-		                    .query(contactUri, projection, null, null, null);
-		            cursor.moveToFirst();
-
-		            // Retrieve the phone number from the NUMBER column
-		            int column = cursor.getColumnIndex(Phone.NUMBER);
-		            String number = cursor.getString(column);
-
-		            // Do something with the phone number...
-		            textView.setText(number);
+		            setContactInfo(data.getData());
+		            
 		        }
 			break;
 
@@ -92,6 +90,29 @@ public class MainActivity extends Activity {
 			break;
 		}
 	}
+	
+	private void setContactInfo(Uri contactUri) {
+		 // We only need the NUMBER column, because there will be only one row in the result
+        String[] projection = {Phone.NUMBER};
+
+        // Perform the query on the contact to get the NUMBER column
+        // We don't need a selection or sort order (there's only one result for the given URI)
+        // CAUTION: The query() method should be called from a separate thread to avoid blocking
+        // your app's UI thread. (For simplicity of the sample, this code doesn't do that.)
+        // Consider using CursorLoader to perform the query.
+        Cursor cursor = getContentResolver()
+                .query(contactUri, projection, null, null, null);
+        cursor.moveToFirst();
+
+        // Retrieve the phone number from the NUMBER column
+        int column = cursor.getColumnIndex(Phone.NUMBER);
+        String number = cursor.getString(column);
+
+        // Do something with the phone number...
+        textView.setText(number);
+	}
+	
+	
 	private void setPic() {
 	    // Get the dimensions of the View
 	    int targetW = imageView.getWidth();
