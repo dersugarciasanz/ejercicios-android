@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -22,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -147,7 +149,14 @@ public class MainActivity extends Activity {
 				Intent intent = new Intent(MainActivity.this,FormActivity.class);
 				intent.putExtra(EDIT_TEXT, text);
 				startActivityForResult(intent, REQUEST_FORM);
-			} 
+			} else {
+				Context context = getApplicationContext();
+				CharSequence message = "Write something, please";
+				int duration = Toast.LENGTH_SHORT;
+
+				Toast toast = Toast.makeText(context, message, duration);
+				toast.show();
+			}
 		}
 	}
 

@@ -1,12 +1,14 @@
 package com.dersugarcia.intents;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FormActivity extends Activity {
 
@@ -55,6 +57,13 @@ public class FormActivity extends Activity {
 				result.putExtra(EDIT_TEXT, text);
 				setResult(RESULT_OK, result);
 				finish();
+			} else {
+				Context context = getApplicationContext();
+				CharSequence message = "Write something, please";
+				int duration = Toast.LENGTH_SHORT;
+
+				Toast toast = Toast.makeText(context, message, duration);
+				toast.show();
 			}
 		}
 	}
