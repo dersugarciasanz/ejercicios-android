@@ -16,39 +16,40 @@ public class FormActivity extends Activity {
 	public static final String TEXT_VIEW = "TEXT_VIEW";
 	private EditText editText;
 	private TextView textView;
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_form);
-		
+
 		textView = (TextView) findViewById(R.id.textview_form);
 		editText = (EditText) findViewById(R.id.edittext_form);
-		
+
 		findViewById(R.id.button_ok).setOnClickListener(new OKClickListener());
-		findViewById(R.id.button_back).setOnClickListener(new BackClickListener());
-		
-		if(savedInstanceState == null) {
-			textView.setText(getIntent().getCharSequenceExtra(MainActivity.EDIT_TEXT));
+		findViewById(R.id.button_back).setOnClickListener(
+				new BackClickListener());
+
+		if (savedInstanceState == null) {
+			textView.setText(getIntent().getCharSequenceExtra(
+					MainActivity.EDIT_TEXT));
 		}
 	}
-	
+
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-//		Save variables before destroying the activity
+		// Save variables before destroying the activity
 		outState.putCharSequence(TEXT_VIEW, textView.getText());
 		super.onSaveInstanceState(outState);
 	}
-	
+
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-//		Restore saved variables
+		// Restore saved variables
 		textView.setText(savedInstanceState.getCharSequence(TEXT_VIEW));
 	}
-	
-	private class OKClickListener implements OnClickListener  {
+
+	private class OKClickListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
 			String text = editText.getText().toString();
@@ -67,14 +68,14 @@ public class FormActivity extends Activity {
 			}
 		}
 	}
-	
-	private class BackClickListener implements OnClickListener  {
+
+	private class BackClickListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
-				Intent result = new Intent(FormActivity.this,MainActivity.class);
-				setResult(RESULT_CANCELED, result);
-				finish();
+			Intent result = new Intent(FormActivity.this, MainActivity.class);
+			setResult(RESULT_CANCELED, result);
+			finish();
 		}
 	}
-	
+
 }
