@@ -50,31 +50,31 @@ public class MainActivity extends Activity {
 			public void onReceive(Context context, Intent intent) {
 				long reference = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
 				if (myDownloadReference == reference) {
-					
-					
-					Query successfulDownloadQuery = new Query(); 
-					successfulDownloadQuery.setFilterById(myDownloadReference);
-					Cursor successfulDownloads = downloadManager.query(successfulDownloadQuery);
-					int sizeIdx = successfulDownloads.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES);
-					int localUriIdx = successfulDownloads.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
-					while (successfulDownloads.moveToNext()) {
-						int size = successfulDownloads.getInt(sizeIdx);
-						String name = successfulDownloads.getString(localUriIdx);
-						Toast.makeText(MainActivity.this,
-								"Download Complete: " + name + "\n Size: " + size,
-								Toast.LENGTH_LONG).show();
-
-					}
-					successfulDownloads.close();
-					
-//					Uri uri = downloadManager.getUriForDownloadedFile(reference);
-//					Toast.makeText(MainActivity.this,
-//							"Download Complete: " + uri.getPath(),
-//							Toast.LENGTH_LONG).show();
+					getDownloadInfo(reference);
 				}
 			}
 		};
 		registerReceiver(receiver, filter);
+	}
+	
+	
+	private void getDownloadInfo(long reference) {
+		Query successfulDownloadQuery = new Query(); 
+		successfulDownloadQuery.setFilterById(reference);
+		Cursor successfulDownloads = downloadManager.query(successfulDownloadQuery);
+		int sizeIdx = successfulDownloads.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES);
+		int localUriIdx = successfulDownloads.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
+		while (successfulDownloads.moveToNext()) {
+			int size = successfulDownloads.getInt(sizeIdx);
+			String name = successfulDownloads.getString(localUriIdx);
+			Toast.makeText(MainActivity.this, "Download Complete: " + name + "\n Size: " + size, Toast.LENGTH_LONG).show();
+		}
+		successfulDownloads.close();
+		
+//		Uri uri = downloadManager.getUriForDownloadedFile(reference);
+//		Toast.makeText(MainActivity.this,
+//				"Download Complete: " + uri.getPath(),
+//				Toast.LENGTH_LONG).show();
 	}
 
 	private class PhotosClickListener implements OnClickListener {
@@ -99,7 +99,6 @@ public class MainActivity extends Activity {
 		public void onClick(View arg0) {
 			downloadZip();
 		}
-
 	}
 
 	public void processJSON(JSONObject json) {
