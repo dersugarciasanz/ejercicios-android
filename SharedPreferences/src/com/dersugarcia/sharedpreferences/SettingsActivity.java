@@ -14,6 +14,8 @@ import android.widget.Switch;
 
 public class SettingsActivity extends Activity implements OnCheckedChangeListener, OnItemSelectedListener {
 	private static final String MY_PREFS = "MY_PREFS";
+	private static final String INTERVAL_INDEX = "INTERVAL_INDEX";
+	private static final String AUTOREFRESH_CHECKED = "AUTOREFRESH_CHECKED";
 	private SharedPreferences mySharedPreferences;
 	private Switch autorefresh;
 	private Spinner spinner;
@@ -36,8 +38,8 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 	}
 
 	private void loadSharedPreferences() {
-		boolean checked = mySharedPreferences.getBoolean("isChecked", false);
-		int position = mySharedPreferences.getInt("autorefreshIndex", 0);
+		boolean checked = mySharedPreferences.getBoolean(AUTOREFRESH_CHECKED, false);
+		int position = mySharedPreferences.getInt(INTERVAL_INDEX, 0);
 		autorefresh.setChecked(checked);
 		spinner.setSelection(position);
 	}
@@ -47,7 +49,7 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 	public void onCheckedChanged(CompoundButton buttonView,
 			boolean isChecked) {
 		SharedPreferences.Editor editor = mySharedPreferences.edit();
-		    editor.putBoolean("isChecked", isChecked);
+		    editor.putBoolean(AUTOREFRESH_CHECKED, isChecked);
 		    editor.apply();
 	}
 	
@@ -55,7 +57,7 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 			long arg3) {
 		SharedPreferences.Editor editor = mySharedPreferences.edit();
-	    editor.putInt("autorefreshIndex", arg2);
+	    editor.putInt(INTERVAL_INDEX, arg2);
 	    editor.apply();
 	}
 
