@@ -2,8 +2,6 @@ package com.dersugarcia.internet;
 
 import java.util.ArrayList;
 
-import javax.xml.datatype.Duration;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

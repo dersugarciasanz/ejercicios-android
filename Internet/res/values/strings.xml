@@ -4,5 +4,7 @@
     <string name="app_name">Internet</string>
     <string name="hello_world">Hello world!</string>
     <string name="my_feed">http://www.arkaitzgarro.com/android/photos.json</string>
+    <string name="button_zip">Zip</string>
+    <string name="button_photos">Photos</string>
 
 </resources>
