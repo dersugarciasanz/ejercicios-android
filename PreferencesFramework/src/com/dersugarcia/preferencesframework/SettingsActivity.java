@@ -1,19 +1,18 @@
 package com.dersugarcia.preferencesframework;
 
-import java.util.List;
-
+import android.app.Activity;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
+		
+		getFragmentManager().beginTransaction()
+        .replace(android.R.id.content, new SettingsFragment())
+        .commit();
 	}
-	
-	public void onBuildHeaders(List<Header> target) {
-		loadHeadersFromResource(R.xml.userpreferenceheaders, target);
-	}
+
 }

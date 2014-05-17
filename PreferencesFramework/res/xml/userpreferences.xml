@@ -3,24 +3,30 @@
 
     <PreferenceCategory android:title="Update settings" >
         <SwitchPreference 
-            android:key="AUTOREFRESH"
+            android:key="@string/autorefresh_switch_key"
             android:defaultValue="false"
             android:summary="Update automatically"
             android:title="Autorefresh" />
         
         <ListPreference
-            android:key="INTERVAL"
+            android:key="@string/interval_list_key"
+            android:defaultValue="interval_default_value"
             android:entries="@array/interval_array"
-            android:summary="List of intervals"
+            android:entryValues="@array/interval_values"
+            android:summary="Set the refreshing interval"
             android:title="Interval"
         ></ListPreference>
             
     </PreferenceCategory>
     <PreferenceCategory android:title="Filters" >
         <ListPreference
-            android:key="EQ_MAGNITUDE"
+            android:key="@string/magnitude_list_key"
+            android:defaultValue="magnitude_default_value"
+            android:entries="@array/magnitude_array"
+            android:entryValues="@array/magnitude_array"
+            android:summary="Filter the earthquakes by magnitude"
+            android:title="Magnitude"
         ></ListPreference>
     </PreferenceCategory>
-￼
 
 </PreferenceScreen>
