@@ -10,5 +10,8 @@
     <string name="magnitude_list_key">settings_magnitude</string>
     <string name="magnitude_default_value">1</string>
     <string name="interval_default_value">30 min</string>
+    <string name="wifi_settings">WiFi Settings</string>
+    <string name="data_settings">Data Roaming Settings</string>
+    <string name="settings">System Settings</string>
 
 </resources>

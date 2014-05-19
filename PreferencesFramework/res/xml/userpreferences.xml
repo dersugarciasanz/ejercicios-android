@@ -11,6 +11,7 @@
         <ListPreference
             android:key="@string/interval_list_key"
             android:defaultValue="interval_default_value"
+            android:dependency="@string/autorefresh_switch_key"
             android:entries="@array/interval_array"
             android:entryValues="@array/interval_values"
             android:summary="Set the refreshing interval"
@@ -27,6 +28,17 @@
             android:summary="Filter the earthquakes by magnitude"
             android:title="Magnitude"
         ></ListPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="System preferences" >
+        <Preference android:title="@string/wifi_settings" >
+    		<intent android:action="android.settings.WIFI_SETTINGS" />
+		</Preference>
+		<Preference android:title="@string/data_settings" >
+    		<intent android:action="android.settings.DATA_ROAMING_SETTINGS" />
+		</Preference>
+		<Preference android:title="@string/settings" >
+    		<intent android:action="android.settings.SETTINGS" />
+		</Preference>
     </PreferenceCategory>
 
 </PreferenceScreen>

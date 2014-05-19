@@ -28,8 +28,8 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
 		}
 	}
 	private void updateMenu(SharedPreferences sharedPreferences) {
-		boolean enabled = sharedPreferences.getBoolean(KEY_PREF_AUTOREFRESH, true);
-		findPreference(KEY_PREF_INTERVAL).setEnabled(enabled);
+//		boolean enabled = sharedPreferences.getBoolean(KEY_PREF_AUTOREFRESH, true);
+//		findPreference(KEY_PREF_INTERVAL).setEnabled(enabled);
 	}
 	
 }
