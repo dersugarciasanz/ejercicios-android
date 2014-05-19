@@ -5,6 +5,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 public class SettingsFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener {
 	
@@ -13,7 +14,6 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.userpreferences);
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		updateMenu(sharedPreferences);
 		sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 	}
 
@@ -21,12 +21,11 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
 		if (key.equals(getResources().getString(R.string.autorefresh_switch_key))) {
-			updateMenu(sharedPreferences);
+			Toast.makeText(getActivity(), "Congrats! You pushed the switch!", Toast.LENGTH_SHORT).show();
+		} else if (key.equals(getResources().getString(R.string.interval_list_key))) {
+			Toast.makeText(getActivity(), "Congrats! You changed the interval!", Toast.LENGTH_SHORT).show();
 		}
 	}
-	private void updateMenu(SharedPreferences sharedPreferences) {
-//		boolean enabled = sharedPreferences.getBoolean(getResources().getString(R.string.autorefresh_switch_key), true);
-//		findPreference(getResources().getString(R.string.interval_list_key)).setEnabled(enabled);
-	}
+
 	
 }
