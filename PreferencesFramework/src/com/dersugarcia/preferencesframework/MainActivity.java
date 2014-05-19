@@ -13,9 +13,6 @@ public class MainActivity extends Activity {
 
 	
 	TextView autorefresh, interval, magnitude;
-	private static final String SETTINGS_AUTOREFRESH = "settings_autorefresh";
-	private static final String SETTINGS_INTERVAL = "settings_interval";
-	private static final String SETTINGS_MAGNITUDE = "settings_magnitude";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +37,13 @@ public class MainActivity extends Activity {
 		super.onResume();
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		boolean autorefreshIsChecked = prefs.getBoolean(SETTINGS_AUTOREFRESH, false);
+		boolean autorefreshIsChecked = prefs.getBoolean(getResources().getString(R.string.autorefresh_switch_key), false);
 		autorefresh.setText("Autorefresh: " + String.valueOf(autorefreshIsChecked));
-		String intervalSelection = prefs.getString(SETTINGS_INTERVAL, "1");
+		String intervalSelection = prefs.getString(getResources().getString(R.string.interval_list_key), "1");
 		interval.setText("Interval: " + intervalSelection);
-		String magnitudeSelection = prefs.getString(SETTINGS_MAGNITUDE, "1");
+		String magnitudeSelection = prefs.getString(getResources().getString(R.string.magnitude_list_key), "1");
 		magnitude.setText("Magnitude: " + magnitudeSelection);
+		
 	}
 
 	@Override
