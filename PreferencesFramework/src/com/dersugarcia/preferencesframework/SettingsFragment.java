@@ -22,6 +22,14 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
 			String key) {
 		if (key.equals(getString(R.string.autorefresh_switch_key))) {
 			Toast.makeText(getActivity(), "Congrats! You pushed the switch!", Toast.LENGTH_SHORT).show();
+			
+			boolean autorefresh = sharedPreferences.getBoolean(key, false);
+			
+			if (autorefresh) {
+				// Start
+			} else {
+				// Pause
+			}
 		} else if (key.equals(getString(R.string.interval_list_key))) {
 			Toast.makeText(getActivity(), "Congrats! You changed the interval!", Toast.LENGTH_SHORT).show();
 		}
