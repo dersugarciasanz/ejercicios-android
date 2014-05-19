@@ -37,11 +37,11 @@ public class MainActivity extends Activity {
 		super.onResume();
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		boolean autorefreshIsChecked = prefs.getBoolean(getResources().getString(R.string.autorefresh_switch_key), false);
+		boolean autorefreshIsChecked = prefs.getBoolean(getString(R.string.autorefresh_switch_key), false);
 		autorefresh.setText("Autorefresh: " + String.valueOf(autorefreshIsChecked));
-		String intervalSelection = prefs.getString(getResources().getString(R.string.interval_list_key), "1");
+		String intervalSelection = prefs.getString(getString(R.string.interval_list_key), "1");
 		interval.setText("Interval: " + intervalSelection);
-		String magnitudeSelection = prefs.getString(getResources().getString(R.string.magnitude_list_key), "1");
+		String magnitudeSelection = prefs.getString(getString(R.string.magnitude_list_key), "1");
 		magnitude.setText("Magnitude: " + magnitudeSelection);
 		
 	}

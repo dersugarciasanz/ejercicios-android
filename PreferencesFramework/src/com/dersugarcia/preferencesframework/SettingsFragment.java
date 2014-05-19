@@ -20,9 +20,9 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
-		if (key.equals(getResources().getString(R.string.autorefresh_switch_key))) {
+		if (key.equals(getString(R.string.autorefresh_switch_key))) {
 			Toast.makeText(getActivity(), "Congrats! You pushed the switch!", Toast.LENGTH_SHORT).show();
-		} else if (key.equals(getResources().getString(R.string.interval_list_key))) {
+		} else if (key.equals(getString(R.string.interval_list_key))) {
 			Toast.makeText(getActivity(), "Congrats! You changed the interval!", Toast.LENGTH_SHORT).show();
 		}
 	}
