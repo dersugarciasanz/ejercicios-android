@@ -34,10 +34,10 @@ public class MyListFragment extends ListFragment {
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 	
-	public void addItem(EarthQuake item) {
-		list.add(0,item);
-		adapter.notifyDataSetChanged();
-	}
+//	public void addItem(EarthQuake item) {
+//		list.add(0,item);
+//		adapter.notifyDataSetChanged();
+//	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -79,10 +79,7 @@ public class MyListFragment extends ListFragment {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				} finally {
-					String mag = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(getString(R.string.magnitude_list_key), "0");
-					Log.d(TAG, mag);
-					list.addAll(eqdb.filterByMagnitude(Double.parseDouble(mag)));
-					adapter.notifyDataSetChanged();
+					updateList();
 				}
 				
 			}
@@ -94,6 +91,20 @@ public class MyListFragment extends ListFragment {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void updateList() {
+		String mag = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(getString(R.string.magnitude_list_key), "0");
+		Log.d(TAG, mag);
+		list.clear();
+		list.addAll(eqdb.filterByMagnitude(Double.parseDouble(mag)));
+		adapter.notifyDataSetChanged();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		updateList();
 	}
 	
 }
