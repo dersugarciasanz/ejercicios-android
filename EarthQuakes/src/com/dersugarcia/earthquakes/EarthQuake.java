@@ -1,7 +1,12 @@
 package com.dersugarcia.earthquakes;
 
-public class EarthQuake {
+import java.io.Serializable;
+
+import android.text.format.DateFormat;
+
+public class EarthQuake implements Serializable {
 	
+	private static final long serialVersionUID = 3197537726816925015L;
 	private int id;
 	private String place;
 	private long time;
@@ -64,6 +69,9 @@ public class EarthQuake {
 	}
 	public long getUpdated_at() {
 		return updated_at;
+	}
+	public String toString() {
+		return "Mag: " + magnitude + "\nTime: " + DateFormat.format("yyyy-MM-dd", time) + "\nPlace: " + place;
 	}
 
 }

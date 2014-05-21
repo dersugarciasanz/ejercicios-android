@@ -12,10 +12,21 @@ import android.database.sqlite.SQLiteDatabase;
 public class EarthQuakeDB {
 
 	private EQDBOpenHelper dbHelper;
+	private SQLiteDatabase db;
 
 	public EarthQuakeDB(Context context) {
 		dbHelper = new EQDBOpenHelper(context, EQDBOpenHelper.DATABASE_NAME,
 				null, EQDBOpenHelper.DATABASE_VERSION);
+	}
+	
+	public void openDB() {
+		if(db == null || !db.isOpen()) {
+			db = dbHelper.getWritableDatabase();
+		}
+	}
+	
+	public void closeDB() {
+		db.close();
 	}
 
 	public Cursor query(String filter, String filterArgs[]) {
@@ -35,7 +46,7 @@ public class EarthQuakeDB {
 		String having = null;
 		String order = null;
 
-		SQLiteDatabase db = dbHelper.getWritableDatabase();
+		openDB();
 		Cursor cursor = db.query(EQDBOpenHelper.DATABASE_TABLE, result_columns,
 				where, whereArgs, groupBy, having, order);
 		return cursor;
@@ -83,12 +94,11 @@ public class EarthQuakeDB {
 			list.add(eq);
 		}
 		cursor.close();
-		
 		return list;
 	}
 	
 
-	public void insert(EarthQuake e) {
+	public long insert(EarthQuake e) {
 		// Create a new row of values to insert.
 		ContentValues newValues = new ContentValues();
 		Date d = new Date();
@@ -106,8 +116,9 @@ public class EarthQuakeDB {
 		newValues.put(EQDBOpenHelper.UPDATEDATCOLUMN, createdAt);
 
 		// Insert the row into your table
-		SQLiteDatabase db = dbHelper.getWritableDatabase();
-		db.insert(EQDBOpenHelper.DATABASE_TABLE, null, newValues);
+		openDB();
+		long rowId = db.insert(EQDBOpenHelper.DATABASE_TABLE, null, newValues);
+		return rowId;
 	}
 
 	public void delete(int id) {
@@ -116,7 +127,7 @@ public class EarthQuakeDB {
 		String where = EQDBOpenHelper.IDCOLUMN + " = ?";
 		String whereArgs[] = { String.valueOf(id) };
 		// Delete the rows that match the where clause.
-		SQLiteDatabase db = dbHelper.getWritableDatabase();
+		openDB();
 		db.delete(EQDBOpenHelper.DATABASE_TABLE, where, whereArgs);
 	}
 

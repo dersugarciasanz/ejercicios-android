@@ -7,42 +7,12 @@
     android:padding="10dp"
     tools:context="${packageName}.${activityClass}" >
 
-    <Button
-        android:id="@+id/create_button"
+<FrameLayout
+        android:id="@+id/list_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="CREATE" />
-     <Button
-        android:id="@+id/select_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="SELECT *" />
-    <Button
-        android:id="@+id/insert_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="INSERT" />
-    <Button
-        android:id="@+id/update_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="UPDATE" />
-    <Button
-        android:id="@+id/delete_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="DELETE" />
-    <Button
-        android:id="@+id/json_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="JSON" />
+        >
+    </FrameLayout>
    
 
 </LinearLayout>

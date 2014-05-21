@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Update settings" >
+        <SwitchPreference 
+            android:key="@string/autorefresh_switch_key"
+            android:defaultValue="false"
+            android:summary="Update automatically"
+            android:title="Autorefresh" />
+        
+        <ListPreference
+            android:key="@string/interval_list_key"
+            android:defaultValue="@string/interval_default_value"
+            android:dependency="@string/autorefresh_switch_key"
+            android:entries="@array/interval_array"
+            android:entryValues="@array/interval_values"
+            android:summary="Set the refreshing interval"
+            android:title="Interval"
+        ></ListPreference>
+            
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Filters" >
+        <ListPreference
+            android:key="@string/magnitude_list_key"
+            android:defaultValue="@string/magnitude_default_value"
+            android:entries="@array/magnitude_array"
+            android:entryValues="@array/magnitude_array"
+            android:summary="Filter the earthquakes by magnitude"
+            android:title="Magnitude"
+        ></ListPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="System preferences" >
+        <Preference android:title="@string/wifi_settings" >
+    		<intent android:action="android.settings.WIFI_SETTINGS" />
+		</Preference>
+		<Preference android:title="@string/data_settings" >
+    		<intent android:action="android.settings.DATA_ROAMING_SETTINGS" />
+		</Preference>
+		<Preference android:title="@string/settings" >
+    		<intent android:action="android.settings.SETTINGS" />
+		</Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>
