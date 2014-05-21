@@ -44,7 +44,7 @@ public class EarthQuakeDB {
 		String whereArgs[] = filterArgs;
 		String groupBy = null;
 		String having = null;
-		String order = null;
+		String order = EQDBOpenHelper.TIMECOLUMN + " DESC";
 
 		openDB();
 		Cursor cursor = db.query(EQDBOpenHelper.DATABASE_TABLE, result_columns,
