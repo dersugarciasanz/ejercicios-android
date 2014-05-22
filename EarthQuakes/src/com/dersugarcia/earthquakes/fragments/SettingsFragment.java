@@ -1,15 +1,13 @@
 package com.dersugarcia.earthquakes.fragments;
 
-import com.dersugarcia.earthquakes.R;
-import com.dersugarcia.earthquakes.R.string;
-import com.dersugarcia.earthquakes.R.xml;
-
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
+
+import com.dersugarcia.earthquakes.R;
 
 public class SettingsFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener {
 	

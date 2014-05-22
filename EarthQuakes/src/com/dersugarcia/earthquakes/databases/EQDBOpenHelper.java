@@ -1,4 +1,4 @@
-package com.dersugarcia.earthquakes;
+package com.dersugarcia.earthquakes.databases;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

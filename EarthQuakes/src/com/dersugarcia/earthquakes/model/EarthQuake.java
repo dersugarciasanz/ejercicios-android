@@ -1,4 +1,4 @@
-package com.dersugarcia.earthquakes;
+package com.dersugarcia.earthquakes.model;
 
 import java.io.Serializable;
 

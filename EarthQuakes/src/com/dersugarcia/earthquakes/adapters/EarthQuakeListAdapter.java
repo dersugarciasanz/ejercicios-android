@@ -1,4 +1,4 @@
-package com.dersugarcia.earthquakes;
+package com.dersugarcia.earthquakes.adapters;
 
 import java.util.ArrayList;
 
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.dersugarcia.earthquakes.R;
+import com.dersugarcia.earthquakes.model.EarthQuake;
 
 public class EarthQuakeListAdapter extends BaseAdapter {
 

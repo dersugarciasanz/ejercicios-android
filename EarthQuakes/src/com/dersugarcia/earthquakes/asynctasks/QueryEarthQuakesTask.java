@@ -1,10 +1,15 @@
-package com.dersugarcia.earthquakes;
+package com.dersugarcia.earthquakes.asynctasks;
 
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+
+import com.dersugarcia.earthquakes.R;
+import com.dersugarcia.earthquakes.adapters.IEarthQuakeListAdapter;
+import com.dersugarcia.earthquakes.databases.EarthQuakeDB;
+import com.dersugarcia.earthquakes.model.EarthQuake;
 
 public class QueryEarthQuakesTask extends
 		AsyncTask<Void, Void, ArrayList<EarthQuake>> {

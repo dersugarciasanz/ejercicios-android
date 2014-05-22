@@ -1,4 +1,4 @@
-package com.dersugarcia.earthquakes;
+package com.dersugarcia.earthquakes.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,10 +1,15 @@
-package com.dersugarcia.earthquakes;
+package com.dersugarcia.earthquakes.asynctasks;
 
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.dersugarcia.earthquakes.adapters.IEarthQuakeListAdapter;
+import com.dersugarcia.earthquakes.databases.EarthQuakeDB;
+import com.dersugarcia.earthquakes.model.EarthQuake;
+import com.dersugarcia.earthquakes.util.ResourceParser;
 
 import android.content.Context;
 import android.os.AsyncTask;
