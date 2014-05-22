@@ -1,4 +1,8 @@
-package com.dersugarcia.earthquakes;
+package com.dersugarcia.earthquakes.fragments;
+
+import com.dersugarcia.earthquakes.R;
+import com.dersugarcia.earthquakes.R.string;
+import com.dersugarcia.earthquakes.R.xml;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;

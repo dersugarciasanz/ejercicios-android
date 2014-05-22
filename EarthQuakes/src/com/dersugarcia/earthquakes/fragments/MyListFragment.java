@@ -1,6 +1,14 @@
-package com.dersugarcia.earthquakes;
+package com.dersugarcia.earthquakes.fragments;
 
 import java.util.ArrayList;
+
+import com.dersugarcia.earthquakes.DownloadEarthQuakesTask;
+import com.dersugarcia.earthquakes.EarthQuake;
+import com.dersugarcia.earthquakes.EarthQuakeListAdapter;
+import com.dersugarcia.earthquakes.IEarthQuakeListAdapter;
+import com.dersugarcia.earthquakes.QueryEarthQuakesTask;
+import com.dersugarcia.earthquakes.R;
+import com.dersugarcia.earthquakes.R.string;
 
 import android.app.ListFragment;
 import android.os.Bundle;
