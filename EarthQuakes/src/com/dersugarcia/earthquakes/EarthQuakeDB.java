@@ -11,12 +11,20 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class EarthQuakeDB {
 
+	private static EarthQuakeDB instance;
 	private EQDBOpenHelper dbHelper;
 	private SQLiteDatabase db;
 
-	public EarthQuakeDB(Context context) {
+	private EarthQuakeDB(Context context) {
 		dbHelper = new EQDBOpenHelper(context, EQDBOpenHelper.DATABASE_NAME,
 				null, EQDBOpenHelper.DATABASE_VERSION);
+	}
+	
+	public static EarthQuakeDB getInstance(Context context) {
+		if (instance == null) {
+			instance = new EarthQuakeDB(context);
+		}
+		return instance;
 	}
 	
 	public void openDB() {
@@ -94,6 +102,7 @@ public class EarthQuakeDB {
 			list.add(eq);
 		}
 		cursor.close();
+		db.close();
 		return list;
 	}
 	
@@ -118,6 +127,7 @@ public class EarthQuakeDB {
 		// Insert the row into your table
 		openDB();
 		long rowId = db.insert(EQDBOpenHelper.DATABASE_TABLE, null, newValues);
+		closeDB();
 		return rowId;
 	}
 
@@ -129,6 +139,7 @@ public class EarthQuakeDB {
 		// Delete the rows that match the where clause.
 		openDB();
 		db.delete(EQDBOpenHelper.DATABASE_TABLE, where, whereArgs);
+		closeDB();
 	}
 
 }

@@ -13,22 +13,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 public class MyListFragment extends ListFragment {
 	
 
 	private static final String TAG = "EARTHQUAKES";
 	private ArrayList<EarthQuake> list;
-	private ArrayAdapter<EarthQuake> adapter;
+	private EarthQuakeListAdapter adapter;
 	private EarthQuakeDB eqdb;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		eqdb = new EarthQuakeDB(container.getContext());
+		eqdb = EarthQuakeDB.getInstance(container.getContext());
 		list = new ArrayList<EarthQuake>();
-		adapter = new ArrayAdapter<EarthQuake>(inflater.getContext(), android.R.layout.simple_list_item_1, list);
+		adapter = new EarthQuakeListAdapter(inflater.getContext(), list);
+//				new ArrayAdapter<EarthQuake>(inflater.getContext(), android.R.layout.simple_list_item_1, list);
 		setListAdapter(adapter);
 		
 		return super.onCreateView(inflater, container, savedInstanceState);
