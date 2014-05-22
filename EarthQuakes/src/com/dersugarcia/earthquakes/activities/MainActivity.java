@@ -1,7 +1,9 @@
-package com.dersugarcia.earthquakes;
+package com.dersugarcia.earthquakes.activities;
 
 
 
+import com.dersugarcia.earthquakes.MyListFragment;
+import com.dersugarcia.earthquakes.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

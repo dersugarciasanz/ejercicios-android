@@ -1,5 +1,7 @@
-package com.dersugarcia.earthquakes;
+package com.dersugarcia.earthquakes.activities;
 
+import com.dersugarcia.earthquakes.R;
+import com.dersugarcia.earthquakes.SettingsFragment;
 import android.app.Activity;
 import android.os.Bundle;
 

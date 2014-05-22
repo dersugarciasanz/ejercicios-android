@@ -1,9 +1,11 @@
 package com.dersugarcia.earthquakes;
 
 import java.util.ArrayList;
+
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,9 @@ public class MyListFragment extends ListFragment implements IEarthQuakeListAdapt
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		
+		Log.d("EARTHQUAKE", "onActivityCreated()");
+		
 		if(savedInstanceState != null) {
 			list.addAll((ArrayList<EarthQuake>) savedInstanceState.getSerializable("ARRAYLIST"));
 			adapter.notifyDataSetChanged();
@@ -74,6 +79,12 @@ public class MyListFragment extends ListFragment implements IEarthQuakeListAdapt
 		list.clear();
 		list.addAll(newList);
 		adapter.notifyDataSetChanged();
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 	}
 	
 }
