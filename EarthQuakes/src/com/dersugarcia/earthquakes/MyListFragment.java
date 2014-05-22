@@ -1,12 +1,9 @@
 package com.dersugarcia.earthquakes;
 
 import java.util.ArrayList;
-
-
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +11,12 @@ import android.view.ViewGroup;
 public class MyListFragment extends ListFragment implements IEarthQuakeListAdapter {
 	
 
-	private static final String TAG = "EARTHQUAKES";
 	private ArrayList<EarthQuake> list;
 	private EarthQuakeListAdapter adapter;
-	private EarthQuakeDB eqdb;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		eqdb = EarthQuakeDB.getInstance(container.getContext());
 		list = new ArrayList<EarthQuake>();
 		adapter = new EarthQuakeListAdapter(inflater.getContext(), list);
 		setListAdapter(adapter);
@@ -56,18 +50,29 @@ public class MyListFragment extends ListFragment implements IEarthQuakeListAdapt
 		d.execute("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson");
 	}
 	
-	public void updateList() {
-		String mag = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(getString(R.string.magnitude_list_key), "0");
-		Log.d(TAG, mag);
+	public void addEarthQuakes(ArrayList<EarthQuake> newList) {
+		String magStr = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(getString(R.string.magnitude_list_key), "0");
+		double mag = Double.parseDouble(magStr);
+		for (EarthQuake earthQuake: newList) {
+			
+			if(earthQuake.getMagnitude() > mag) {
+				list.add(0, earthQuake);
+			}
+		}
+		adapter.notifyDataSetChanged();
+	}
+	
+	public void updateList(ArrayList<EarthQuake> newList) {
 		list.clear();
-		list.addAll(eqdb.filterByMagnitude(Double.parseDouble(mag)));
+		list.addAll(newList);
 		adapter.notifyDataSetChanged();
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
-		updateList();
+		QueryEarthQuakesTask q = new QueryEarthQuakesTask(this, getActivity());
+		q.execute();
 	}
 	
 }
