@@ -34,6 +34,7 @@ public class MyListFragment extends ListFragment implements IEarthQuakeListAdapt
 			list.addAll((ArrayList<EarthQuake>) savedInstanceState.getSerializable("ARRAYLIST"));
 			adapter.notifyDataSetChanged();
 		} else {
+			queryEarthQuakes();
 			getEarthQuakes();
 		}
 	}
@@ -50,6 +51,12 @@ public class MyListFragment extends ListFragment implements IEarthQuakeListAdapt
 		d.execute("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson");
 	}
 	
+	private void queryEarthQuakes() {
+		QueryEarthQuakesTask q = new QueryEarthQuakesTask(this, getActivity());
+		q.execute();
+	}
+	
+	@Override
 	public void addEarthQuakes(ArrayList<EarthQuake> newList) {
 		String magStr = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(getString(R.string.magnitude_list_key), "0");
 		double mag = Double.parseDouble(magStr);
@@ -62,17 +69,11 @@ public class MyListFragment extends ListFragment implements IEarthQuakeListAdapt
 		adapter.notifyDataSetChanged();
 	}
 	
+	@Override
 	public void updateList(ArrayList<EarthQuake> newList) {
 		list.clear();
 		list.addAll(newList);
 		adapter.notifyDataSetChanged();
-	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-		QueryEarthQuakesTask q = new QueryEarthQuakesTask(this, getActivity());
-		q.execute();
 	}
 	
 }
