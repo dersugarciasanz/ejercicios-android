@@ -19,13 +19,14 @@ import com.dersugarcia.earthquakes.model.EarthQuake;
 
 public class MyListFragment extends ListFragment implements IEarthQuakeListAdapter {
 	
-
+	private static boolean magnitudeWasChanged;
 	private ArrayList<EarthQuake> list;
 	private EarthQuakeListAdapter adapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		magnitudeWasChanged = false;
 		list = new ArrayList<EarthQuake>();
 		adapter = new EarthQuakeListAdapter(inflater.getContext(), list);
 		setListAdapter(adapter);
@@ -33,6 +34,9 @@ public class MyListFragment extends ListFragment implements IEarthQuakeListAdapt
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 	
+	public static void setMagnitudeWasChanged(boolean value) {
+		magnitudeWasChanged = value;
+	}
 
 	
 	@SuppressWarnings("unchecked")
@@ -90,8 +94,11 @@ public class MyListFragment extends ListFragment implements IEarthQuakeListAdapt
 	
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
+		if(magnitudeWasChanged) {
+			setMagnitudeWasChanged(false);
+			queryEarthQuakes();
+		}
 	}
 	
 }
