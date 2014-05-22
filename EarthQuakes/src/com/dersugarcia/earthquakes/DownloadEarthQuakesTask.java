@@ -1,5 +1,7 @@
 package com.dersugarcia.earthquakes;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,7 +11,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class DownloadEarthQuakesTask extends
-		AsyncTask<String, Void, Void> {
+		AsyncTask<String, Void, ArrayList<EarthQuake>> {
 
 	private static final String TAG = "EARTHQUAKES";
 	private IEarthQuakeListAdapter fragment;
@@ -21,22 +23,23 @@ public class DownloadEarthQuakesTask extends
 	}
 	
 	@Override
-	protected void onPostExecute(Void result) {
-		fragment.updateList();
-	}
-
-	@Override
-	protected Void doInBackground(String... urls) {
+	protected ArrayList<EarthQuake> doInBackground(String... urls) {
+		ArrayList<EarthQuake> result = new ArrayList<EarthQuake>();
+		
 		JSONObject json =  ResourceParser.getJSONObject(urls[0]);
 		try {
 			JSONArray array = json.getJSONArray("features");
-			for(int i=0; i< array.length(); i++) {
+			for(int i=array.length()-1; i>=0 ; i--) {
 				JSONObject eq = array.getJSONObject(i);
 				JSONObject props =  eq.getJSONObject("properties");
 				JSONArray coordinates =  eq.getJSONObject("geometry").getJSONArray("coordinates");
 				EarthQuake e = new EarthQuake(props.getString("place")
 						, props.getLong("time"), props.getString("detail"), props.getDouble("mag"), coordinates.getDouble(1),  coordinates.getDouble(0), props.getString("url"));
-				eqdb.insert(e);
+				long id = eqdb.insert(e);
+				
+				if(id != -1) {
+					result.add(e);
+				}
 				
 				Log.d(TAG, "Recuperado terremoto número: " + e.getTime());
 			}
@@ -44,7 +47,13 @@ public class DownloadEarthQuakesTask extends
 			e.printStackTrace();
 		}
 		
-		return null;
+		return result;
+	}
+	
+	@Override
+	protected void onPostExecute(ArrayList<EarthQuake> result) {
+		
+		fragment.addEarthQuakes(result);
 	}
 
 }
