@@ -35,7 +35,7 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
 		} else if (key.equals(getString(R.string.interval_list_key))) {
 			Toast.makeText(getActivity(), "Congrats! You changed the interval!", Toast.LENGTH_SHORT).show();
 		} else if(key.equals(getString(R.string.magnitude_list_key))) {
-			MyListFragment.setMagnitudeWasChanged(true);
+			Toast.makeText(getActivity(), "Congrats! You changed the magnitude!", Toast.LENGTH_SHORT).show();
 		}
 	}
 
