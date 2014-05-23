@@ -74,4 +74,9 @@ public class EarthQuake implements Serializable {
 		return "Mag: " + magnitude + "\nTime: " + DateFormat.format("yyyy-MM-dd", time) + "\nPlace: " + place;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+		
+	}
+
 }

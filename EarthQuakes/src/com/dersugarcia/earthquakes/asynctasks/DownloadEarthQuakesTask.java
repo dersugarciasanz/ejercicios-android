@@ -43,6 +43,7 @@ public class DownloadEarthQuakesTask extends
 				long id = eqdb.insert(e);
 				
 				if(id != -1) {
+					e.setId((int) id);
 					result.add(e);
 				}
 				
