@@ -45,6 +45,8 @@ public class MainActivity extends Activity {
 			Intent i = new Intent(this, SettingsActivity.class);
 			startActivity(i);
 			return true;
+		} else if(id == R.id.action_refresh) {
+			((MyListFragment)(getFragmentManager().findFragmentById(R.id.list_container))).getEarthQuakes();;
 		}
 		return super.onOptionsItemSelected(item);
 	}
