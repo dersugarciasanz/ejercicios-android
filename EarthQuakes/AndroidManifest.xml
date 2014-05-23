@@ -33,6 +33,13 @@
             android:label="@string/title_activity_detail"
             android:parentActivityName="com.dersugarcia.earthquakes.activities.MainActivity" >
         </activity>
+
+        <provider
+            android:name="com.dersugarcia.earthquakes.provider.EarthQuakesContentProvider"
+            android:authorities="com.dersugarcia.provider.earthquakes"
+            android:enabled="true"
+            android:exported="false" >
+        </provider>
     </application>
 
 </manifest>
