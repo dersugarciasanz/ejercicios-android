@@ -19,25 +19,21 @@ import com.dersugarcia.earthquakes.model.EarthQuake;
 
 public class MyListFragment extends ListFragment implements IEarthQuakeListAdapter {
 	
-	private static boolean magnitudeWasChanged;
 	private ArrayList<EarthQuake> list;
 	private EarthQuakeListAdapter adapter;
+	private double lastMagnitude;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		magnitudeWasChanged = false;
 		list = new ArrayList<EarthQuake>();
 		adapter = new EarthQuakeListAdapter(inflater.getContext(), list);
 		setListAdapter(adapter);
 		
+		lastMagnitude = Double.valueOf(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(getString(R.string.magnitude_list_key), "0"));
+		
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
-	
-	public static void setMagnitudeWasChanged(boolean value) {
-		magnitudeWasChanged = value;
-	}
-
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -54,7 +50,6 @@ public class MyListFragment extends ListFragment implements IEarthQuakeListAdapt
 			getEarthQuakes();
 		}
 	}
-	
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -74,11 +69,9 @@ public class MyListFragment extends ListFragment implements IEarthQuakeListAdapt
 	
 	@Override
 	public void addEarthQuakes(ArrayList<EarthQuake> newList) {
-		String magStr = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(getString(R.string.magnitude_list_key), "0");
-		double mag = Double.parseDouble(magStr);
 		for (EarthQuake earthQuake: newList) {
 			
-			if(earthQuake.getMagnitude() > mag) {
+			if(earthQuake.getMagnitude() > lastMagnitude) {
 				list.add(0, earthQuake);
 			}
 		}
@@ -95,8 +88,11 @@ public class MyListFragment extends ListFragment implements IEarthQuakeListAdapt
 	@Override
 	public void onResume() {
 		super.onResume();
-		if(magnitudeWasChanged) {
-			setMagnitudeWasChanged(false);
+		
+		double newMagnitude = Double.valueOf(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(getString(R.string.magnitude_list_key), "0"));
+		
+		if(lastMagnitude != newMagnitude) {
+			lastMagnitude = newMagnitude;
 			queryEarthQuakes();
 		}
 	}
