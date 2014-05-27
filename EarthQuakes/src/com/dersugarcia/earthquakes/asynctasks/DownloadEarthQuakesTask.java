@@ -1,35 +1,32 @@
 package com.dersugarcia.earthquakes.asynctasks;
 
-import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.dersugarcia.earthquakes.adapters.IEarthQuakeListAdapter;
-import com.dersugarcia.earthquakes.databases.EarthQuakeDB;
 import com.dersugarcia.earthquakes.model.EarthQuake;
+import com.dersugarcia.earthquakes.provider.EarthQuakesContentProvider;
 import com.dersugarcia.earthquakes.util.ResourceParser;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 public class DownloadEarthQuakesTask extends
-		AsyncTask<String, Void, ArrayList<EarthQuake>> {
+		AsyncTask<String, Void, Void> {
 
 	private static final String TAG = "EARTHQUAKES";
-	private IEarthQuakeListAdapter fragment;
-	private EarthQuakeDB eqdb;
+	private Context mContext;
 	
-	public DownloadEarthQuakesTask(IEarthQuakeListAdapter fragment, Context context) {
-		this.fragment = fragment;
-		this.eqdb = EarthQuakeDB.getInstance(context);
+	
+	public DownloadEarthQuakesTask(Context context) {
+		mContext = context;
 	}
 	
 	@Override
-	protected ArrayList<EarthQuake> doInBackground(String... urls) {
-		ArrayList<EarthQuake> result = new ArrayList<EarthQuake>();
+	protected Void doInBackground(String... urls) {
 		
 		JSONObject json =  ResourceParser.getJSONObject(urls[0]);
 		try {
@@ -38,28 +35,32 @@ public class DownloadEarthQuakesTask extends
 				JSONObject eq = array.getJSONObject(i);
 				JSONObject props =  eq.getJSONObject("properties");
 				JSONArray coordinates =  eq.getJSONObject("geometry").getJSONArray("coordinates");
-				EarthQuake e = new EarthQuake(props.getString("place")
+				EarthQuake e = new EarthQuake(eq.getString("id"), props.getString("place")
 						, props.getLong("time"), props.getString("detail"), props.getDouble("mag"), coordinates.getDouble(1),  coordinates.getDouble(0), props.getString("url"));
-				long id = eqdb.insert(e);
-				
-				if(id != -1) {
-					e.setId((int) id);
-					result.add(e);
-				}
+				insertEarthQuake(e);
 				
 				Log.d(TAG, "Recuperado terremoto número: " + e.getTime());
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		return null;
 		
-		return result;
 	}
 	
-	@Override
-	protected void onPostExecute(ArrayList<EarthQuake> result) {
-		
-		fragment.addEarthQuakes(result);
+	private void insertEarthQuake(EarthQuake q) {
+		ContentResolver cr = mContext.getContentResolver();
+		ContentValues newValues = new ContentValues();
+
+		newValues.put(EarthQuakesContentProvider.Columns.KEY_TIME, q.getTime());
+		newValues.put(EarthQuakesContentProvider.Columns.KEY_ID_STR, q.getIdStr());
+		newValues.put(EarthQuakesContentProvider.Columns.KEY_PLACE, q.getPlace());
+		newValues.put(EarthQuakesContentProvider.Columns.KEY_LOCATION_LAT, q.getLatitude());
+		newValues.put(EarthQuakesContentProvider.Columns.KEY_LOCATION_LNG, q.getLongitude());
+		newValues.put(EarthQuakesContentProvider.Columns.KEY_MAGNITUDE, q.getMagnitude());
+		newValues.put(EarthQuakesContentProvider.Columns.KEY_URL, q.getUrl());
+
+		cr.insert(EarthQuakesContentProvider.CONTENT_URI, newValues);
 	}
 
 }

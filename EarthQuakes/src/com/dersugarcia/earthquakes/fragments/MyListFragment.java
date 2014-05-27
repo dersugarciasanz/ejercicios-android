@@ -1,113 +1,103 @@
 package com.dersugarcia.earthquakes.fragments;
 
-import java.util.ArrayList;
-
 import android.app.ListFragment;
+import android.app.LoaderManager.LoaderCallbacks;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 import com.dersugarcia.earthquakes.R;
 import com.dersugarcia.earthquakes.activities.DetailActivity;
-import com.dersugarcia.earthquakes.adapters.EarthQuakeListAdapter;
-import com.dersugarcia.earthquakes.adapters.IEarthQuakeListAdapter;
 import com.dersugarcia.earthquakes.asynctasks.DownloadEarthQuakesTask;
-import com.dersugarcia.earthquakes.asynctasks.QueryEarthQuakesTask;
-import com.dersugarcia.earthquakes.model.EarthQuake;
+import com.dersugarcia.earthquakes.provider.EarthQuakesContentProvider;
 
-public class MyListFragment extends ListFragment implements IEarthQuakeListAdapter {
+public class MyListFragment extends ListFragment implements LoaderCallbacks<Cursor>  {
 	
-	private ArrayList<EarthQuake> list;
-	private EarthQuakeListAdapter adapter;
-	private double lastMagnitude;
+	private String[] from = { EarthQuakesContentProvider.Columns.KEY_TIME,
+			EarthQuakesContentProvider.Columns.KEY_MAGNITUDE,
+			EarthQuakesContentProvider.Columns.KEY_PLACE,
+			EarthQuakesContentProvider.Columns._ID };
+	private int[] to = { R.id.time, R.id.magnitude, R.id.place };
+	private SimpleCursorAdapter adapter;
+	public final static String ID = "_id";
+	private int LOADER_ID = 1;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		list = new ArrayList<EarthQuake>();
-		adapter = new EarthQuakeListAdapter(inflater.getContext(), list);
+		
+		adapter = new SimpleCursorAdapter(getActivity(),
+				R.layout.row, null, from, to, 0);
+		adapter.setViewBinder(new EarthquakeViewBinder());
 		setListAdapter(adapter);
 		
-		lastMagnitude = Double.valueOf(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(getString(R.string.magnitude_list_key), "0"));
+		getLoaderManager().initLoader(LOADER_ID, null, this);
 		
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		
-		Log.d("EARTHQUAKE", "onActivityCreated()");
-		
-		if(savedInstanceState != null) {
-			list.addAll((ArrayList<EarthQuake>) savedInstanceState.getSerializable("ARRAYLIST"));
-			adapter.notifyDataSetChanged();
-		} else {
-			queryEarthQuakes();
-			getEarthQuakes();
-		}
+		refreshEarthquakes();
 	}
 	
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		outState.putSerializable("ARRAYLIST", list);
-		super.onSaveInstanceState(outState);
+	public void refreshEarthquakes() {
+		new DownloadEarthQuakesTask(getActivity()).execute(getString(R.string.quake_feed));
 	}
-	
-	public void getEarthQuakes() {
-		DownloadEarthQuakesTask d = new DownloadEarthQuakesTask(this, getActivity());
-		d.execute("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson");
-	}
-	
-	public void queryEarthQuakes() {
-		QueryEarthQuakesTask q = new QueryEarthQuakesTask(this, getActivity());
-		q.execute();
-	}
-	
-	@Override
-	public void addEarthQuakes(ArrayList<EarthQuake> newList) {
-		for (EarthQuake earthQuake: newList) {
-			
-			if(earthQuake.getMagnitude() > lastMagnitude) {
-				list.add(0, earthQuake);
-			}
-		}
-		adapter.notifyDataSetChanged();
-	}
-	
-	@Override
-	public void updateList(ArrayList<EarthQuake> newList) {
-		list.clear();
-		list.addAll(newList);
-		adapter.notifyDataSetChanged();
-	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		
-		double newMagnitude = Double.valueOf(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(getString(R.string.magnitude_list_key), "0"));
-		
-		if(lastMagnitude != newMagnitude) {
-			lastMagnitude = newMagnitude;
-			queryEarthQuakes();
-		}
+		getLoaderManager().restartLoader(LOADER_ID, null, this);
 	}
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		EarthQuake eq = list.get(position);
-		int eqId = eq.getId();
+		
 		Intent i = new Intent(getActivity(), DetailActivity.class);
-		i.putExtra("id", eqId);
+		i.putExtra(ID, id);
+		
 		startActivity(i);
+	}
+
+	@Override
+	public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		String minMag = prefs.getString(
+				getResources().getString(R.string.magnitude_list_key), "0");
+
+		String where = EarthQuakesContentProvider.Columns.KEY_MAGNITUDE + " >= ? ";
+		String[] whereArgs = { minMag };
+		String order = EarthQuakesContentProvider.Columns.KEY_TIME;
+
+		CursorLoader loader = new CursorLoader(getActivity(),
+				EarthQuakesContentProvider.CONTENT_URI, from, where, whereArgs,
+				order);
+
+		return loader;
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+		adapter.swapCursor(cursor);
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader) {
+		adapter.swapCursor(null);
 	}
 	
 }

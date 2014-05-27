@@ -7,7 +7,7 @@ import android.text.format.DateFormat;
 public class EarthQuake implements Serializable {
 	
 	private static final long serialVersionUID = 3197537726816925015L;
-	private int id;
+	private int _id;
 	private String place;
 	private long time;
 	private String detail;
@@ -17,20 +17,22 @@ public class EarthQuake implements Serializable {
 	private String url;
 	private long created_at;
 	private long updated_at;
+	private String idStr;
 	
-	public EarthQuake(int id, String place, long time, String detail,
+	public EarthQuake(int id, String idStr, String place, long time, String detail,
 			double magnitude, double latitude, double longitude, String url,
 			long created_at, long updated_at) {
 		
-		this(place, time, detail, magnitude, latitude, longitude, url);
-		this.id = id;
+		this(idStr, place, time, detail, magnitude, latitude, longitude, url);
+		this._id = id;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 	}
 	
-	public EarthQuake(String place, long time, String detail,
+	public EarthQuake(String idStr, String place, long time, String detail,
 			double magnitude, double latitude, double longitude, String url) {
 		
+		this.idStr = idStr;
 		this.place = place;
 		this.time = time;
 		this.detail = detail;
@@ -41,7 +43,7 @@ public class EarthQuake implements Serializable {
 	}
 
 	public int getId() {
-		return id;
+		return _id;
 	}
 	public String getPlace() {
 		return place;
@@ -75,8 +77,12 @@ public class EarthQuake implements Serializable {
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this._id = id;
 		
+	}
+
+	public String getIdStr() {
+		return idStr;
 	}
 
 }

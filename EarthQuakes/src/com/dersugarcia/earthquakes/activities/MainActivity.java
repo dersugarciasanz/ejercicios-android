@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
 			startActivity(i);
 			return true;
 		} else if(id == R.id.action_refresh) {
-			((MyListFragment)(getFragmentManager().findFragmentById(R.id.list_container))).getEarthQuakes();;
+			((MyListFragment)(getFragmentManager().findFragmentById(R.id.list_container))).refreshEarthquakes();
 		}
 		return super.onOptionsItemSelected(item);
 	}

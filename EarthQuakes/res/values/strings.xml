@@ -16,5 +16,6 @@
     <string name="settings">System Settings</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="empty_text"></string>
+    <string name="quake_feed">http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson</string>
 
 </resources>
