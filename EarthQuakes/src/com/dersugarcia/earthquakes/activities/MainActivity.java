@@ -23,8 +23,6 @@ public class MainActivity extends Activity {
 		PreferenceManager.setDefaultValues(this, R.xml.userpreferences, false);
 		
 		
-//		serviceStart();
-		
 		if (savedInstanceState == null) {
 			
 			getFragmentManager().beginTransaction()
@@ -63,16 +61,5 @@ public class MainActivity extends Activity {
 	}
 	
 	
-	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		stopServices();
-	}
-
-	private void stopServices() {
-		Intent intent = new Intent(this, EarthQuakeService.class);
-		stopService(intent);
-	}
 
 }

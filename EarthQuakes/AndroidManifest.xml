@@ -40,11 +40,19 @@
             android:enabled="true"
             android:exported="false" >
         </provider>
-        <service 
-            android:enabled="true"
+
+        <service
             android:name="com.dersugarcia.earthquakes.asynctasks.EarthQuakeService"
-            android:permission="com.dersugarcia.EarthQuakeServicePermission">
+            android:enabled="true"
+            android:permission="com.dersugarcia.earthquakes.EarthQuakeServicePermission" >
         </service>
+
+        <receiver
+            android:name="com.dersugarcia.earthquakes.EarthQuakeReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter><action android:name="com.dersugarcia.earthquakes.DownloadEarthQuakesAction"/></intent-filter>
+        </receiver>
     </application>
 
 </manifest>
