@@ -17,7 +17,6 @@ import android.widget.SimpleCursorAdapter;
 
 import com.dersugarcia.earthquakes.R;
 import com.dersugarcia.earthquakes.activities.DetailActivity;
-import com.dersugarcia.earthquakes.asynctasks.DownloadEarthQuakesTask;
 import com.dersugarcia.earthquakes.provider.EarthQuakesContentProvider;
 
 public class MyListFragment extends ListFragment implements LoaderCallbacks<Cursor>  {
@@ -45,17 +44,6 @@ public class MyListFragment extends ListFragment implements LoaderCallbacks<Curs
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		
-		refreshEarthquakes();
-	}
-	
-	public void refreshEarthquakes() {
-		new DownloadEarthQuakesTask(getActivity()).execute(getString(R.string.quake_feed));
-	}
-
 	@Override
 	public void onResume() {
 		super.onResume();

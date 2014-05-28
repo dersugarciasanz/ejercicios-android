@@ -40,6 +40,11 @@
             android:enabled="true"
             android:exported="false" >
         </provider>
+        <service 
+            android:enabled="true"
+            android:name="com.dersugarcia.earthquakes.asynctasks.EarthQuakeService"
+            android:permission="com.dersugarcia.EarthQuakeServicePermission">
+        </service>
     </application>
 
 </manifest>

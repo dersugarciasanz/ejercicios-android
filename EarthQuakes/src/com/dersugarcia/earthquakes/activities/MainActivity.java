@@ -3,6 +3,7 @@ package com.dersugarcia.earthquakes.activities;
 
 
 import com.dersugarcia.earthquakes.R;
+import com.dersugarcia.earthquakes.asynctasks.EarthQuakeService;
 import com.dersugarcia.earthquakes.fragments.MyListFragment;
 
 import android.app.Activity;
@@ -21,12 +22,22 @@ public class MainActivity extends Activity {
 		
 		PreferenceManager.setDefaultValues(this, R.xml.userpreferences, false);
 		
+		
+		serviceStart();
+		
 		if (savedInstanceState == null) {
+			
 			getFragmentManager().beginTransaction()
 					.add(R.id.list_container, new MyListFragment(), "listTag").commit();
 		}
 	}
 	
+	private void serviceStart() {
+		Intent intent = new Intent(this, EarthQuakeService.class);
+		startService(intent);
+		
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -46,9 +57,22 @@ public class MainActivity extends Activity {
 			startActivity(i);
 			return true;
 		} else if(id == R.id.action_refresh) {
-			((MyListFragment)(getFragmentManager().findFragmentById(R.id.list_container))).refreshEarthquakes();
+			serviceStart();
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		stopServices();
+	}
+
+	private void stopServices() {
+		Intent intent = new Intent(this, EarthQuakeService.class);
+		stopService(intent);
 	}
 
 }
