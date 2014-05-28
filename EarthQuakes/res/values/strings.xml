@@ -17,5 +17,11 @@
     <string name="title_activity_detail">DetailActivity</string>
     <string name="empty_text"></string>
     <string name="quake_feed">http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson</string>
+    <string name="detail_magnitude">Magnitude: </string>
+    <string name="detail_place">Place: </string>
+    <string name="detail_time">Time: </string>
+    <string name="detail_latitude">Latitude: </string>
+    <string name="detail_longitude">Longitude: </string>
+    <string name="detail_url">Url: </string>
 
 </resources>
