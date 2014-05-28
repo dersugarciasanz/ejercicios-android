@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
 		PreferenceManager.setDefaultValues(this, R.xml.userpreferences, false);
 		
 		
-		serviceStart();
+//		serviceStart();
 		
 		if (savedInstanceState == null) {
 			
