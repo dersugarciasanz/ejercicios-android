@@ -64,7 +64,7 @@ public class EarthQuakeService extends Service {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				
+				stopSelf();
 			}
 			
 		});

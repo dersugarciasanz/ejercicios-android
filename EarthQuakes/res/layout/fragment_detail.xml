@@ -14,6 +14,35 @@
         android:id="@+id/detail_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text="@string/detail_place"
+        android:layout_gravity="center"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/detail_magnitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_magnitude"
+        android:textSize="30sp"
+        android:textColor="@android:color/holo_blue_dark"  />
+    <TextView
+        android:id="@+id/detail_latitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_latitude" />
+    <TextView
+        android:id="@+id/detail_longitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_longitude" />
+    <TextView
+        android:id="@+id/detail_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_time" />
+    <TextView
+        android:id="@+id/detail_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_url" />
 
 </LinearLayout>

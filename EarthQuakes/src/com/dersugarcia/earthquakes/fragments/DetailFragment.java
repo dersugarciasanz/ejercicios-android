@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentUris;
@@ -20,17 +21,17 @@ import android.database.Cursor;
 public class DetailFragment extends Fragment implements LoaderCallbacks<Cursor> {
 	private long id;
 	private static int LOADER_ID = 2;
-	
-	public DetailFragment() {
-		
-	}
+	private TextView placeTextView, timeTextView, magnitudeTextView, latitudeTextView, longitudeTextView, urlTextView;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_detail,
 				container, false);
-
+		
+		saveViews(rootView);
+		
+		
 		id = getArguments().getLong("id");
 		Toast.makeText(inflater.getContext(), "Earthquake id: " + id, Toast.LENGTH_SHORT).show();
 		
@@ -39,6 +40,16 @@ public class DetailFragment extends Fragment implements LoaderCallbacks<Cursor> 
 		return rootView;
 	}
 	
+	private void saveViews(View rootView) {
+		placeTextView = (TextView) rootView.findViewById(R.id.detail_place);
+		timeTextView = (TextView) rootView.findViewById(R.id.detail_time);
+		magnitudeTextView = (TextView) rootView.findViewById(R.id.detail_magnitude);
+		latitudeTextView = (TextView) rootView.findViewById(R.id.detail_latitude);
+		longitudeTextView = (TextView) rootView.findViewById(R.id.detail_longitude);
+		urlTextView = (TextView) rootView.findViewById(R.id.detail_url);
+		
+	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -55,12 +66,36 @@ public class DetailFragment extends Fragment implements LoaderCallbacks<Cursor> 
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-		int place_idx = cursor.getColumnIndex(EarthQuakesContentProvider.Columns.KEY_PLACE);
+		
 		
 		if(cursor.moveToFirst()) {
-			String place = cursor.getString(place_idx);
-			Toast.makeText(getActivity(), place, Toast.LENGTH_SHORT).show();
+			draw(cursor);
 		}
+	}
+	
+	public void draw(Cursor cursor) {
+		int place_idx = cursor.getColumnIndex(EarthQuakesContentProvider.Columns.KEY_PLACE);
+		int magnitude_idx = cursor.getColumnIndex(EarthQuakesContentProvider.Columns.KEY_MAGNITUDE);
+		int latitude_idx = cursor.getColumnIndex(EarthQuakesContentProvider.Columns.KEY_LOCATION_LAT);
+		int longitude_idx = cursor.getColumnIndex(EarthQuakesContentProvider.Columns.KEY_LOCATION_LNG);
+		int time_idx = cursor.getColumnIndex(EarthQuakesContentProvider.Columns.KEY_TIME);
+		int url_idx = cursor.getColumnIndex(EarthQuakesContentProvider.Columns.KEY_URL);
+		
+		
+		String place = cursor.getString(place_idx);
+		String magnitude = cursor.getString(magnitude_idx);
+		String latitude = cursor.getString(latitude_idx);
+		String longitude = cursor.getString(longitude_idx);
+		String time = cursor.getString(time_idx);
+		String url = cursor.getString(url_idx);
+		
+		placeTextView.setText(place);
+		magnitudeTextView.setText(magnitude);
+		latitudeTextView.setText(latitude);
+		longitudeTextView.setText(longitude);
+		timeTextView.setText(time);
+		urlTextView.setText(url);
+
 	}
 
 	@Override
